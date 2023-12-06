@@ -21,6 +21,10 @@ class UserRepository {
   findAll(): Promise<UserDocument[]> {
     return this.userModel.find().select('id name email purchases');
   }
+
+  findById(id: string): Promise<UserDocument> {
+    return this.userModel.findById(id);
+  }
 }
 
 export { UserRepository };

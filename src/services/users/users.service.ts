@@ -3,6 +3,7 @@ import { SignInDto, SignUpDto } from 'src/core/dtos/user.dto';
 import { UserRepository } from 'src/repositories/user.repository';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { ROLES } from 'src/utils/constants';
 
 @Injectable()
 export class UsersService {
@@ -19,7 +20,9 @@ export class UsersService {
       if (match) {
         const payload = { sub: user._id, email: user.email };
         return {
-          access_token: await this.jwtService.signAsync(payload),
+          access_token: await this.jwtService.signAsync(payload, {
+            expiresIn: '30d',
+          }),
         };
       }
     }
@@ -44,5 +47,10 @@ export class UsersService {
 
   async getAll() {
     return this.userRepository.findAll();
+  }
+
+  async getRoleById(id: string) {
+    const result = await this.userRepository.findById(id);
+    return result?.role || ROLES.USER;
   }
 }

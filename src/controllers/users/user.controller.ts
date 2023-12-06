@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { UsersService } from 'src/services/users/users.service';
+
 import {
   AuthValidationSignIn,
   AuthValidationSignOut,

@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { ROLES } from 'src/utils/constants';
 
 @Schema({
   timestamps: { createdAt: 'created', updatedAt: 'updated' },
@@ -16,6 +17,9 @@ export class User {
 
   @Prop({ required: true, default: 0 })
   purchases: number;
+
+  @Prop({ required: true, default: ROLES.USER })
+  role: string;
 
   @Prop({ required: true })
   password: string;

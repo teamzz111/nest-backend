@@ -12,6 +12,7 @@ interface SignInDto {
 interface SignUpDto {
   password: string;
   email: string;
+  name: string;
 }
 
 export { UserDto, SignInDto, SignUpDto };

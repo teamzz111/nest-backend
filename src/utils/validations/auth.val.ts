@@ -24,6 +24,10 @@ class AuthValidationSignOut implements SignUpDto {
   @ApiProperty()
   @IsNotEmpty()
   purchases: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  name: string;
 }
 
 export { AuthValidationSignIn, AuthValidationSignOut };

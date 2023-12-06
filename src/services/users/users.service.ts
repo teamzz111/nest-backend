@@ -31,6 +31,7 @@ export class UsersService {
     const hashPassword = await bcrypt.hash(signUpDto.password, salt);
     const user = await this.userRepository.signUp({
       email: signUpDto.email,
+      name: signUpDto.name,
       password: hashPassword,
     });
 

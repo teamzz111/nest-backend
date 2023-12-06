@@ -41,4 +41,8 @@ export class UsersService {
       return { access_token: token };
     }
   }
+
+  async getAll() {
+    return this.userRepository.findAll();
+  }
 }

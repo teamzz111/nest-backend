@@ -17,6 +17,10 @@ class UserRepository {
   signUp(data: SignUpDto) {
     return new this.userModel({ ...data }).save();
   }
+
+  findAll(): Promise<UserDocument[]> {
+    return this.userModel.find().select('id name email purchases');
+  }
 }
 
 export { UserRepository };

@@ -1,7 +1,10 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { Roles } from 'src/decorators/roles.decorators';
 import { UsersService } from 'src/services/users/users.service';
+import { ROLES } from 'src/utils/constants';
 
 import {
   AuthValidationSignIn,
@@ -23,8 +26,9 @@ export class UserController {
     return this.userService.signUp(signUpDto);
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RolesGuard)
   @ApiBearerAuth('JWT-auth')
+  @Roles(ROLES.ADMIN)
   @Get('all')
   getAll() {
     return this.userService.getAll();

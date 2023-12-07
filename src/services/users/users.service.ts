@@ -20,6 +20,10 @@ export class UsersService {
       if (match) {
         const payload = { sub: user._id, email: user.email };
         return {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          isActive: user.isActive,
           access_token: await this.jwtService.signAsync(payload, {
             expiresIn: '30d',
           }),

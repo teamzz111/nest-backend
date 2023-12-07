@@ -19,7 +19,7 @@ class UserRepository {
   }
 
   findAll(): Promise<UserDocument[]> {
-    return this.userModel.find().select('id name email purchases');
+    return this.userModel.find().select('id name email purchases isActive');
   }
 
   findById(id: string): Promise<UserDocument> {

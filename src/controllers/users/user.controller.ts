@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
@@ -9,6 +18,7 @@ import { ROLES } from 'src/utils/constants';
 import {
   AuthValidationSignIn,
   AuthValidationSignOut,
+  UserUpdateValidation,
 } from 'src/utils/validations/auth.val';
 
 @ApiTags('User')
@@ -32,5 +42,21 @@ export class UserController {
   @Get('all')
   getAll() {
     return this.userService.getAll();
+  }
+
+  @UseGuards(AuthGuard, RolesGuard)
+  @ApiBearerAuth('JWT-auth')
+  @Roles(ROLES.ADMIN)
+  @Delete(':id')
+  deleteById(@Param('id') param: string) {
+    return this.userService.deleteById(param);
+  }
+
+  @UseGuards(AuthGuard, RolesGuard)
+  @ApiBearerAuth('JWT-auth')
+  @Roles(ROLES.ADMIN)
+  @Put(':id')
+  updateBy(@Param('id') param: string, @Body() data: UserUpdateValidation) {
+    return this.userService.updateById(param, data);
   }
 }

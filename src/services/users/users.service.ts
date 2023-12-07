@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { SignInDto, SignUpDto } from 'src/core/dtos/user.dto';
+import { SignInDto, SignUpDto, UserDto } from 'src/core/dtos/user.dto';
 import { UserRepository } from 'src/repositories/user.repository';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -56,5 +56,13 @@ export class UsersService {
   async getRoleById(id: string) {
     const result = await this.userRepository.findById(id);
     return result?.role || ROLES.USER;
+  }
+
+  async deleteById(id: string) {
+    await this.userRepository.deleteById(id);
+  }
+
+  async updateById(id: string, data: Partial<UserDto>) {
+    return this.userRepository.updateById(id, data);
   }
 }

@@ -1,7 +1,8 @@
 interface UserDto {
-  userId: number;
+  _id: string;
   email: string;
   password: string;
+  purchases: number;
 }
 
 interface SignInDto {

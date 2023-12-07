@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
-import { SignInDto, SignUpDto } from 'src/core/dtos/user.dto';
+import { SignInDto, SignUpDto, UserDto } from 'src/core/dtos/user.dto';
 
 class AuthValidationSignIn implements SignInDto {
   @ApiProperty()
@@ -30,4 +30,15 @@ class AuthValidationSignOut implements SignUpDto {
   name: string;
 }
 
-export { AuthValidationSignIn, AuthValidationSignOut };
+class UserUpdateValidation implements Omit<UserDto, '_id'> {
+  @ApiProperty()
+  email: string;
+
+  @ApiProperty()
+  password: string;
+
+  @ApiProperty()
+  purchases: number;
+}
+
+export { AuthValidationSignIn, AuthValidationSignOut, UserUpdateValidation };

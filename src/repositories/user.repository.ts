@@ -19,11 +19,19 @@ class UserRepository {
   }
 
   findAll(): Promise<UserDocument[]> {
-    return this.userModel.find().select('id name email purchases');
+    return this.userModel.find().select('id name email purchases isActive');
   }
 
   findById(id: string): Promise<UserDocument> {
     return this.userModel.findById(id);
+  }
+
+  async deleteById(id: string): Promise<void> {
+    await this.userModel.deleteOne({ _id: id });
+  }
+
+  async updateById(id: string, data: Partial<UserDocument>) {
+    return this.userModel.updateOne({ _id: id }, data);
   }
 }
 

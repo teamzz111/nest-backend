@@ -4,7 +4,14 @@ import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './utils/constants';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { UserModule } from './modules/user.module';
+import { UserController } from './controllers/users/user.controller';
+import { AnalyticsController } from './controllers/analytics/analytics.controller';
+import { UsersService } from './services/users/users.service';
+import { AnalyticsService } from './services/analytics/analytics.service';
+import { UserRepository } from './repositories/user.repository';
+import { User, UserSchema } from './schemas/user.schema';
+import AnalyticsRepository from './repositories/analytics.repository';
+import { Visit, VisitSchema } from './schemas/visits.schema';
 
 @Module({
   imports: [
@@ -22,12 +29,18 @@ import { UserModule } from './modules/user.module';
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '60d' },
     }),
 
-    UserModule,
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: Visit.name, schema: VisitSchema }]),
   ],
-  controllers: [],
-  providers: [],
+  controllers: [UserController, AnalyticsController],
+  providers: [
+    UsersService,
+    UserRepository,
+    AnalyticsService,
+    AnalyticsRepository,
+  ],
 })
 export class AppModule {}
